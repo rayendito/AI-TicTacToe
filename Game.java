@@ -1,6 +1,9 @@
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Scanner;
+
+import javax.print.attribute.standard.PrinterLocation;
+
 import java.util.ArrayList;
 
 class Game{
@@ -34,8 +37,8 @@ class Game{
         System.out.println("┗━━━┻━━━┻━━━┛");
     }
 
-    public void updateSlot(int nomer, char sopo){
-        grid[nomer-1] = sopo;
+    public void updateSlot(int idx, char sopo){
+        grid[idx] = sopo;
         nAvailableSlot--;
     }
 
@@ -78,7 +81,7 @@ class Game{
             ArrayList<Integer> valueHolder = new ArrayList<Integer>(Arrays.asList(0,0,0,0,0,0,0,0,0));
             if(maks){
                 for(Integer i: availables(grid)){
-                    char[] newGrid = grid;
+                    char[] newGrid = Arrays.copyOf(grid, grid.length);
                     newGrid[i] = 'X';
                     valueHolder.set(i, minimax(newGrid, !maks));
                 }
@@ -88,7 +91,7 @@ class Game{
             }
             else{
                 for(Integer i: availables(grid)){
-                    char[] newGrid = grid;
+                    char[] newGrid = Arrays.copyOf(grid, grid.length);
                     newGrid[i] = 'X';
                     valueHolder.set(i, minimax(newGrid, !maks));
                 }
@@ -109,22 +112,22 @@ class Game{
         //gaem
         System.out.println("Selamat bermain Tic Tac Toe!");
         System.out.println("AI by yours truly: rayendito\n");
+        dor.printGrid();
         while(dor.getNSlot() > 0){
-            //current game state
+            //begin
             System.out.println("Giliran anda!");
-            dor.printGrid();
 
             //user turn and print
             System.out.print("Pilih angka:");
             int input = in.nextInt();
+            dor.updateSlot(input-1, 'O');
             dor.printGrid();
-            dor.updateSlot(input, 'O');
 
             //AI turn
+            System.out.println("AI memilih:");
             int AImove = minimax(dor.getGrid(), true);
             dor.updateSlot(AImove, 'X');
             dor.printGrid();
-            break;
         }
     }
 }
