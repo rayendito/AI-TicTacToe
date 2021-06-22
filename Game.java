@@ -118,14 +118,14 @@ class Game{
             System.out.println("Giliran anda!");
 
             //user turn and print
-            System.out.print("Pilih angka:");
+            System.out.print("Pilih angka: ");
             int input = in.nextInt();
             dor.updateSlot(input-1, 'O');
             dor.printGrid();
 
             //AI turn
-            System.out.println("AI memilih:");
             int AImove = minimax(dor.getGrid(), true);
+            System.out.println("AI memilih: "+(AImove+1));
             dor.updateSlot(AImove, 'X');
             dor.printGrid();
         }
