@@ -1,20 +1,16 @@
 import java.util.Arrays;
 import java.util.Collections;
-import java.lang.reflect.Array;
+import java.util.Scanner;
 import java.util.ArrayList;
 
 class Game{
     private char[] grid = {'1','2','3','4','5','6','7','8','9'};
-    private ArrayList<Integer> availableSlot;
-    private char humanChar;
-    private char AIChar;
+    private int nAvailableSlot;
 
     /*constructor?*/
     public Game(){
         //i'm a constructor! :-D
-        availableSlot = new ArrayList<Integer>(Arrays.asList(0,1,2,3,4,5,6,7,8));
-        humanChar = 'O';
-        AIChar = 'X';
+        nAvailableSlot = 9;
     }
 
     /*getter*/
@@ -22,16 +18,8 @@ class Game{
         return grid;
     }
 
-    public ArrayList<Integer>  getAvailableSlot(){
-        return availableSlot;
-    }
-
-    public char getHumanChar(){
-        return humanChar;
-    }
-
-    public char getAIChar(){
-        return AIChar;
+    public int getNSlot(){
+        return nAvailableSlot;
     }
 
     /*non-getter Methods*/
@@ -46,10 +34,9 @@ class Game{
         System.out.println("┗━━━┻━━━┻━━━┛");
     }
 
-    public void updateSlot(){
-        for(int i = 0; i <= 8; i++){
-            if(grid[i] == humanChar || grid[i] == AIChar) availableSlot.remove(i);
-        }
+    public void updateSlot(int nomer, char sopo){
+        grid[nomer-1] = sopo;
+        nAvailableSlot--;
     }
 
     /*static functions*/
@@ -80,6 +67,7 @@ class Game{
         return retval;
     }
 
+    //input grid sama maks true, return indeks yang paling optimal
     public static int minimax(char[] grid, boolean maks){
         if(availables(grid).size() == 0){
             if (checkWin(grid, 'O')) return -1;
@@ -87,7 +75,7 @@ class Game{
             return 0;
         }
         else{
-            ArrayList<Integer> valueHolder = new ArrayList<Integer>(Arrays.asList(0,0,0,0,0,0,0,0));
+            ArrayList<Integer> valueHolder = new ArrayList<Integer>(Arrays.asList(0,0,0,0,0,0,0,0,0));
             if(maks){
                 for(Integer i: availables(grid)){
                     char[] newGrid = grid;
@@ -111,13 +99,32 @@ class Game{
         }
     }
 
-    public void getBestStep(){
-        //teehee bwelom
-    }
-
     public static void main(String[] args) {
+        //scanner obj
+        Scanner in = new Scanner(System.in);
+        
+        //game obj
         Game dor = new Game();
-        dor.printGrid();
 
+        //gaem
+        System.out.println("Selamat bermain Tic Tac Toe!");
+        System.out.println("AI by yours truly: rayendito\n");
+        while(dor.getNSlot() > 0){
+            //current game state
+            System.out.println("Giliran anda!");
+            dor.printGrid();
+
+            //user turn and print
+            System.out.print("Pilih angka:");
+            int input = in.nextInt();
+            dor.printGrid();
+            dor.updateSlot(input, 'O');
+
+            //AI turn
+            int AImove = minimax(dor.getGrid(), true);
+            dor.updateSlot(AImove, 'X');
+            dor.printGrid();
+            break;
+        }
     }
 }
