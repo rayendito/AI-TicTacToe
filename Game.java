@@ -70,7 +70,7 @@ class Game{
         return retval;
     }
 
-    //input grid sama maks true, return indeks yang paling optimal
+    //input grid sama maks true, return roots of bobot?
     public static int minimax(char[] grid, boolean maks){
         if(availables(grid).size() == 0){
             if (checkWin(grid, 'O')) return -1;
@@ -78,28 +78,34 @@ class Game{
             return 0;
         }
         else{
-            ArrayList<Integer> valueHolder = new ArrayList<Integer>(Arrays.asList(0,0,0,0,0,0,0,0,0));
+            ArrayList<Integer> valueHolder = new ArrayList<Integer>();
             if(maks){
                 for(Integer i: availables(grid)){
                     char[] newGrid = Arrays.copyOf(grid, grid.length);
                     newGrid[i] = 'X';
-                    valueHolder.set(i, minimax(newGrid, !maks));
+                    valueHolder.add(minimax(newGrid, !maks));
                 }
-                Integer maxVal = Collections.max(valueHolder);
-                Integer maxIdx = valueHolder.indexOf(maxVal);
-                return maxIdx.intValue();
+                return Collections.max(valueHolder);
             }
             else{
                 for(Integer i: availables(grid)){
                     char[] newGrid = Arrays.copyOf(grid, grid.length);
-                    newGrid[i] = 'X';
-                    valueHolder.set(i, minimax(newGrid, !maks));
+                    newGrid[i] = 'O';
+                    valueHolder.add(minimax(newGrid, !maks));
                 }
-                Integer minVal = Collections.min(valueHolder);
-                Integer minIdx = valueHolder.indexOf(minVal);
-                return minIdx.intValue();
+                return Collections.min(valueHolder);
             }
         }
+    }
+
+    //find the best step, input grid, output indx to go
+    public static int nextStepAI(char[] grid){
+        // ArrayList<Integer> avail = availables(grid);
+        // for(Integer i: avail){
+
+        // }
+        return 0;
+        //bentar ya ges ya
     }
 
     public static void main(String[] args) {
@@ -124,10 +130,12 @@ class Game{
             dor.printGrid();
 
             //AI turn
-            int AImove = minimax(dor.getGrid(), true);
-            System.out.println("AI memilih: "+(AImove+1));
-            dor.updateSlot(AImove, 'X');
-            dor.printGrid();
+            // int AImove = minimax(dor.getGrid(), true);
+            // System.out.println("AI memilih: "+(AImove+1));
+            // dor.updateSlot(AImove, 'X');
+            // dor.printGrid();
+            break;
         }
+        in.close();
     }
 }
