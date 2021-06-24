@@ -1,12 +1,8 @@
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
-
-import javax.print.attribute.standard.PrinterLocation;
-
 import java.util.ArrayList;
 
 class Game{
