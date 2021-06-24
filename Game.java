@@ -1,5 +1,8 @@
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 import javax.print.attribute.standard.PrinterLocation;
@@ -100,12 +103,28 @@ class Game{
 
     //find the best step, input grid, output indx to go
     public static int nextStepAI(char[] grid){
-        // ArrayList<Integer> avail = availables(grid);
-        // for(Integer i: avail){
+        //get indexes of available slots
+        ArrayList<Integer> avail = availables(grid);
 
-        // }
-        return 0;
-        //bentar ya ges ya
+        //create a map to define indexes associated with corresponding values
+        HashMap<Integer, Integer> indeksBobot = new HashMap<>();
+
+        //trying out each slot and see what happens, call the minimax function
+        for(Integer i: avail){
+            char[] newGrid = Arrays.copyOf(grid, grid.length);
+            newGrid[i] = 'X';
+            indeksBobot.put(i, minimax(newGrid, false));
+        }
+
+        //find the key of the largest value ov value(lmao gjls) bc AI in this case is the maximizer
+        Map.Entry<Integer, Integer> maxs = null;
+        for(Map.Entry<Integer, Integer> entry: indeksBobot.entrySet()){
+            if (maxs == null || entry.getValue().compareTo(maxs.getValue()) > 0){
+                maxs = entry;
+            }
+        }
+
+        return maxs.getKey();
     }
 
     public static void main(String[] args) {
@@ -129,12 +148,12 @@ class Game{
             dor.updateSlot(input-1, 'O');
             dor.printGrid();
 
-            //AI turn
-            // int AImove = minimax(dor.getGrid(), true);
-            // System.out.println("AI memilih: "+(AImove+1));
-            // dor.updateSlot(AImove, 'X');
-            // dor.printGrid();
-            break;
+            // AI turn
+            int AImove = nextStepAI(dor.getGrid());
+            System.out.println("AI memilih: "+(AImove+1));
+            dor.updateSlot(AImove, 'X');
+            dor.printGrid();
+            // break;
         }
         in.close();
     }
