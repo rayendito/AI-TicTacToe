@@ -6,7 +6,7 @@ import java.util.Scanner;
 import java.util.ArrayList;
 
 class Game{
-    private char[] grid = {'1','2','3','4','5','6','7','8','9'};
+    private char[] grid = {' ',' ',' ',' ',' ',' ',' ',' ',' '};
     private int nAvailableSlot;
 
     /*constructor?*/
@@ -133,8 +133,10 @@ class Game{
         Game dor = new Game();
 
         //gaem
-        System.out.println("Selamat bermain Tic Tac Toe!");
-        System.out.println("AI by yours truly: rayendito\n");
+        System.out.println("Selamat bermain Tic Tac Toe dengan AI!");
+        System.out.println("Anda bermain sebagai 'O', AI bermain sebagai 'X'");
+        System.out.println("Nomor kotak urut 1-9 dari kiri atas ke kanan bawah, seperti membaca buku :D");
+        System.out.println("<>'d with <3, rayendito\n");
         dor.printGrid();
         while(dor.getNSlot() > 0){
             //begin
