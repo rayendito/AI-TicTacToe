@@ -75,7 +75,7 @@ class Game{
 
     //input grid sama maks true, return roots of bobot?
     public static int minimax(char[] grid, boolean maks){
-        if(availables(grid).size() == 0){
+        if(availables(grid).size() == 0 || checkWin(grid, 'O') || checkWin(grid, 'X')){
             if (checkWin(grid, 'O')) return -1;
             if (checkWin(grid, 'X')) return 1;
             return 0;
@@ -124,6 +124,8 @@ class Game{
             }
         }
 
+        //r3turn
+
         return maxs.getKey();
     }
 
@@ -147,13 +149,20 @@ class Game{
             int input = in.nextInt();
             dor.updateSlot(input-1, 'O');
             dor.printGrid();
+            if(checkWin(dor.getGrid(), 'O')) System.out.println("To print this line is to do something impossible");
+            else if(dor.getNSlot() == 0){
+                System.out.println("Draw! Thank you for playing");
+                break;
+            }
 
             // AI turn
             int AImove = nextStepAI(dor.getGrid());
             System.out.println("AI memilih: "+(AImove+1));
             dor.updateSlot(AImove, 'X');
             dor.printGrid();
-            // break;
+            if(checkWin(dor.getGrid(), 'X')){
+                System.out.println("AI Wins!, thank you for playing");
+            }
         }
         in.close();
     }
