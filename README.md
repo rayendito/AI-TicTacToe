@@ -1,3 +1,3 @@
 # AI-TicTacToe
 compile Game.java<br>
-jalankan
+jalankan Game.class
