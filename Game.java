@@ -160,6 +160,7 @@ class Game{
             dor.printGrid();
             if(checkWin(dor.getGrid(), 'X')){
                 System.out.println("AI Wins!, thank you for playing");
+                break;
             }
         }
         in.close();
